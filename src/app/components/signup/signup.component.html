@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-md-6 mx-auto">
+    <div class="card text-center mt-5">
+      <div class="card-header">
+        <p class="h4">Register and sign in!!</p>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="user" (submit)="signUp()" novalidate>
+          <div class="form-group">
+            <input type="text" formControlName="name" class="form-control mt-5" placeholder="Name" required autofocus />
+            <div *ngIf="user.get('name').errors && user.get('name').dirty">
+              <p *ngIf="user.get('name').hasError('required')" class="alert alert-danger mt-1" role="alert">
+                Name is required
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" formControlName="email" class="form-control mt-5" placeholder="Email" required
+              autofocus />
+            <div *ngIf="user.get('email').errors && user.get('email').dirty">
+              <p *ngIf="user.get('email').hasError('required')" class="alert alert-danger mt-1" role="alert">
+                E-mail is required
+              </p>
+              <p *ngIf="user.get('email').hasError('email')" class="alert alert-danger mt-1" role="alert">
+                Is not a e-mail
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="password" formControlName="password" class="form-control mt-5" placeholder="Password"
+              required />
+          </div>
+          <div *ngIf="user.get('password').errors && user.get('password').dirty">
+            <p *ngIf="user.get('password').hasError('required')" class="alert alert-danger mt-1" role="alert">
+              Password is required
+            </p>
+            <p *ngIf="user.get('password').hasError('minlength')" class="alert alert-danger mt-1" role="alert">
+              Min of 6 characters
+            </p>
+          </div>
+          <div class="form-group">
+            <input type="password" ngValidateEqual="password" formControlName="confirm_password"
+              class="form-control mt-5" placeholder="Confirm Password" required />
+          </div>
+          <div *ngIf="
+              (user.get('confirm_password').dirty ||
+                user.get('confirm_password').touched) &&
+              user.get('confirm_password').invalid
+            ">
+            <p class="alert alert-danger mt-1" *ngIf="
+                user.get('confirm_password').hasError('notEqual') &&
+                user.get('password').valid
+              ">
+              Passwords Don't Match
+            </p>
+          </div>
+          <button class="btn btn-danger btn-block mt-5" [disabled]="user.invalid">
+            Sign Up
+          </button>
+        </form>
+      </div>
+      <div class="card-footer">
+        <p>
+          Do you already have an account? <a routerLink="/signin">Sign In</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
